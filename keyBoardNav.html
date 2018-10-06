@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+    <link rel="stylesheet" href="./keyBoardNav.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>KeyboardNavigation</title>
+</head>
+<body>
+    <header></header>
+    <main>
+        <div id="wrapper">
+
+        </div>
+<div id="default">
+    <button id="default">default</button>
+</div>
+    </main>
+    <script>
+        keys={
+            0:{0:'q',1:'w',2:'e',3:'r',4:'t',5:'y',6:'u',7:'i',8:'o',9:'p',length:10},
+            1:{0:'a',1:'s',2:'d',3:'f',4:'g',5:'h',6:'j',7:'k',8:'l',length:9},
+            2:{0:'z',1:'x',2:'c',3:'v',4:'b',5:'n',6:'m',length:7},
+            length:3
+        }
+        hash={
+            q:'qq.com',
+            w:'wow.com',
+            e:'ehview.com',
+            
+            t:'tencent.com',
+            y:'yy.com',
+            u:'u17.com',
+            i:'iqiyi.com',
+            o:'opera.com',
+            p:'pornhub.com',
+            a:'alibaba.com',
+            s:'soho.com',
+            d:'dilidili.wang',
+            f:'facebook.com',
+            g:'gamersky.com',
+ 
+        }
+        
+        originhash=hash
+        defaultbtn=document.getElementById("default")
+        defaultbtn.onclick=function(){
+            hash=originhash
+            //localStorage.setItem('hashdemo1',JSON.stringify(hash))<==这行代码还原会把修改过后的hash表存放
+            
+        }
+        myhash= JSON.parse(localStorage.getItem('hashdemo')||'null')
+        if(myhash){
+            hash=myhash
+        }
+       
+
+        index=0
+        while(index<keys.length){
+            row=keys[index]
+            mydiv = document.createElement('div')
+            wrapper.appendChild(mydiv)
+            index2=0
+           
+            while(index2<row.length){
+                mykbd = document.createElement('kbd')
+                mykbd.textContent=row[index2]
+                mydiv.appendChild(mykbd)
+                mybtn=document.createElement('button')
+                mykbd.appendChild(mybtn)
+                mybtn.textContent='edit'
+                //console.log(row['index2'])
+                mybtn.id=row[index2]
+                mybtn.onclick=function(clickkkk){
+                    //console.log(clickkkk.target.id)
+                    website=prompt("give me a website!")
+                    hash[clickkkk.target.id]=website
+                    localStorage.setItem('hashdemo',JSON.stringify(hash))
+                }
+              
+
+                index2=index2+1
+            }
+            
+
+            index=index+1
+        }
+        document.onkeypress=function(keydddd){
+            //console.log()
+            //key1=keydddd['key']
+            window.open('http://'+hash[keydddd.key],'_blank')
+        }
+        
+       
+    </script>
+</body>
+</html>
